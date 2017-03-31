@@ -26,8 +26,8 @@
     <ClInclude Include="skipList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Y:\code\server\trunk\common\algo\skiplist.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="_skiplist.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
