@@ -1,15 +1,14 @@
 /*
-	主要参考redis的skiplist实现 (t_zset.c)，并实现改造和模版化
-	构造有序集合核心数据结构(比如用于排行榜)
+    主要参考redis的skiplist实现 (t_zset.c)，并实现改造和模版化
+    构造有序集合核心数据结构(比如用于排行榜)
     使用此SkipList时，需要提供仿函数COMPARE，用于比较score和key的大小
-	tangxing 2016/1/30
+    tangxing 2016/1/30
 
     更新: 2017/2/6 by tangxing
 */
 
-
-#include <time.h>
-#include <stdlib.h>
+#include <ctime>
+#include <cstdlib>
 #include <vector>
 using namespace std;
 
@@ -36,10 +35,10 @@ public:
     void PopTail();
 
     //获取skiplist中前N个KEY
-    int GetObjTopN( int n, vector<KEY>& v);
+    int GetObjTopN(int n, vector<KEY>& v);
 
     //获取skiplist中前N个SCORE
-    int GetScoreTopN( int n, vector<SCORE>& v);
+    int GetScoreTopN(int n, vector<SCORE>& v);
 
     //获取skiplist的长度
     int Length() { return m_length; }
@@ -91,14 +90,14 @@ private:
     const static int SKIPLIST_MAX_LEVEL = 32;
 
     // skiplist P = 1/4
-	const static float SKIPLIST_P = 0.25;
+    const static float SKIPLIST_P = 0.25;
 
 private:
     //创建一个层数为level的SkipList节点
     SkipListNode* _CreatNode(const SCORE& score, const KEY& key, int level)
     {
         SkipListNode* node = new SkipListNode();
-        if (node==NULL)
+        if (node == NULL)
         {
             return NULL;
         }
@@ -115,7 +114,7 @@ private:
         delete node;
     }
 
-    void _Creat( int MaxLevel);
+    void _Creat(int MaxLevel);
     void _Free();
     int _RandomLevel();
     void DeleteNode(SkipListNode* x, SkipListNode** update);
@@ -129,11 +128,11 @@ private:
 };
 
 template <typename SCORE, typename KEY, typename COMPARE>
-void SkipList<SCORE, KEY, COMPARE>::_Creat( int MaxLevel)
+void SkipList<SCORE, KEY, COMPARE>::_Creat(int MaxLevel)
 {
     if (MaxLevel > SKIPLIST_MAX_LEVEL)
     {
-	    MaxLevel = SKIPLIST_MAX_LEVEL;
+        MaxLevel = SKIPLIST_MAX_LEVEL;
     }
 
     m_maxLevel = MaxLevel;
@@ -149,16 +148,15 @@ void SkipList<SCORE, KEY, COMPARE>::_Creat( int MaxLevel)
     m_tail = NULL;
 
     //设置随机种子
-    srandom( time(NULL) );
+    srandom(time(NULL));
 }
-
 
 template <typename SCORE, typename KEY, typename COMPARE>
 void SkipList<SCORE, KEY, COMPARE>::_Free()
 {
     SkipListNode* x, *next;
     x = m_header;
-    while(x)
+    while (x)
     {
         next = x->level[0].forward;
         _FreeNode(x);
@@ -167,10 +165,10 @@ void SkipList<SCORE, KEY, COMPARE>::_Free()
 }
 
 template <typename SCORE, typename KEY, typename COMPARE>
-int SkipList<SCORE, KEY, COMPARE>:: _RandomLevel()
+int SkipList<SCORE, KEY, COMPARE>::_RandomLevel()
 {
     int level = 1;
-    while ((random()&0xFFFF) < (SKIPLIST_P * 0xFFFF))
+    while ((random() & 0xFFFF) < (SKIPLIST_P * 0xFFFF))
         level += 1;
 
     return (level < m_maxLevel) ? level : m_maxLevel;
@@ -184,12 +182,12 @@ int SkipList<SCORE, KEY, COMPARE>::Insert(const SCORE& score, const KEY& key)
     SkipListNode* update[m_maxLevel];
     int rank[m_maxLevel];
 
-    for (int i = m_level -1; i >= 0; i--)
+    for (int i = m_level - 1; i >= 0; i--)
     {
-        rank[i] = (i == (m_level -1)) ? 0 : rank[i + 1];
+        rank[i] = (i == (m_level - 1)) ? 0 : rank[i + 1];
         while (x->level[i].forward &&
-                (1 == m_comparefunc(score, x->level[i].forward->score)
-                  ||(0 == m_comparefunc(score, x->level[i].forward->score) && 1 == m_comparefunc(key, x->level[i].forward->key))))
+            (1 == m_comparefunc(score, x->level[i].forward->score)
+                || (0 == m_comparefunc(score, x->level[i].forward->score) && 1 == m_comparefunc(key, x->level[i].forward->key))))
         {
             // 如果 i 不是m_level -1 层, 那么 i 层的起始 rank 值为 i+1 层的 rank 值
             // 各个层的 rank 值一层层累积, 最终 rank[0] 的值加一就是新节点的前置节点的排位
@@ -232,7 +230,7 @@ int SkipList<SCORE, KEY, COMPARE>::Insert(const SCORE& score, const KEY& key)
         update[i]->level[i].forward = x;
 
         //计算新节点跨越的节点数量
-        x->level[i].span = update[i]->level[i].span -(rank[0] - rank[i]);
+        x->level[i].span = update[i]->level[i].span - (rank[0] - rank[i]);
 
         // 更新新节点插入之后，沿途节点的 span 值
         update[i]->level[i].span = rank[0] - rank[i] + 1;
@@ -261,8 +259,6 @@ int SkipList<SCORE, KEY, COMPARE>::Insert(const SCORE& score, const KEY& key)
     return rank[0] + 1;
 }
 
-
-
 template <typename SCORE, typename KEY, typename COMPARE>
 void SkipList<SCORE, KEY, COMPARE>::DeleteNode(SkipListNode* x, SkipListNode** update)
 {
@@ -272,7 +268,7 @@ void SkipList<SCORE, KEY, COMPARE>::DeleteNode(SkipListNode* x, SkipListNode** u
         if (update[i]->level[i].forward == x)
         {
             update[i]->level[i].forward = x->level[i].forward;
-            update[i]->level[i].span += x->level[i].span -1;
+            update[i]->level[i].span += x->level[i].span - 1;
         }
         else
         {
@@ -291,7 +287,7 @@ void SkipList<SCORE, KEY, COMPARE>::DeleteNode(SkipListNode* x, SkipListNode** u
     }
 
     //若被删除节点是跳跃表中唯一的最高节点，更新跳跃表当前层数
-    while((m_level > 1) && (m_header->level[m_level-1].forward == NULL))
+    while ((m_level > 1) && (m_header->level[m_level - 1].forward == NULL))
     {
         m_level--;
     }
@@ -299,18 +295,17 @@ void SkipList<SCORE, KEY, COMPARE>::DeleteNode(SkipListNode* x, SkipListNode** u
     m_length--;
 }
 
-
 template <typename SCORE, typename KEY, typename COMPARE>
 bool SkipList<SCORE, KEY, COMPARE>::Delete(const SCORE& score, const KEY& key)
 {
     SkipListNode* x = m_header;
     SkipListNode* update[m_level];
 
-    for (int i = m_level -1; i >= 0; i--)
+    for (int i = m_level - 1; i >= 0; i--)
     {
         while (x->level[i].forward &&
-                (1 == m_comparefunc(score, x->level[i].forward->score)
-                    ||(0 == m_comparefunc(score, x->level[i].forward->score) && 1 == m_comparefunc(key, x->level[i].forward->key))))
+            (1 == m_comparefunc(score, x->level[i].forward->score)
+                || (0 == m_comparefunc(score, x->level[i].forward->score) && 1 == m_comparefunc(key, x->level[i].forward->key))))
         {
             x = x->level[i].forward;
         }
@@ -332,7 +327,7 @@ bool SkipList<SCORE, KEY, COMPARE>::Delete(const SCORE& score, const KEY& key)
 }
 
 template <typename SCORE, typename KEY, typename COMPARE>
-int SkipList<SCORE, KEY, COMPARE>::Update(const SCORE& oldScore, const SCORE& newScore,const KEY& key)
+int SkipList<SCORE, KEY, COMPARE>::Update(const SCORE& oldScore, const SCORE& newScore, const KEY& key)
 {
     if (!this->Delete(oldScore, key))
     {
@@ -348,11 +343,11 @@ int SkipList<SCORE, KEY, COMPARE>::GetRank(const SCORE& score, const KEY& key)
     SkipListNode* x = m_header;
     int rank = 0;
 
-    for (int i = m_level -1; i >= 0; i--)
+    for (int i = m_level - 1; i >= 0; i--)
     {
         while (x->level[i].forward &&
             (1 == m_comparefunc(score, x->level[i].forward->score)
-                    ||(0 == m_comparefunc(score, x->level[i].forward->score) && 1 == m_comparefunc(key, x->level[i].forward->key))))
+                || (0 == m_comparefunc(score, x->level[i].forward->score) && 1 == m_comparefunc(key, x->level[i].forward->key))))
         {
             rank += x->level[i].span;
             x = x->level[i].forward;
@@ -369,7 +364,6 @@ int SkipList<SCORE, KEY, COMPARE>::GetRank(const SCORE& score, const KEY& key)
     return -1;
 }
 
-
 template <typename SCORE, typename KEY, typename COMPARE>
 bool SkipList<SCORE, KEY, COMPARE>::GetTail(SCORE& score, KEY& key)
 {
@@ -385,81 +379,79 @@ bool SkipList<SCORE, KEY, COMPARE>::GetTail(SCORE& score, KEY& key)
     }
 }
 
-
 template <typename SCORE, typename KEY, typename COMPARE>
 void SkipList<SCORE, KEY, COMPARE>::PopTail()
 {
-	if( m_tail == NULL )
-	{
-		return;
-	}
+    if (m_tail == NULL)
+    {
+        return;
+    }
 
-	this->Delete(m_tail->score, m_tail->key);
+    this->Delete(m_tail->score, m_tail->key);
 }
-
 
 template <typename SCORE, typename KEY, typename COMPARE>
 void SkipList<SCORE, KEY, COMPARE>::PrintMe()
 {
-	printf("lenth: %u\n", m_length);
-	printf("level: %d, max level: %d\n", m_level, m_maxLevel);
-	printf("Head:");
-	for( int j = 0; j < m_level; j++ )
-	{
+    printf("lenth: %u\n", m_length);
+    printf("level: %d, max level: %d\n", m_level, m_maxLevel);
+    printf("Head:");
+    for (int j = 0; j < m_level; j++)
+    {
         if (m_header->level != NULL)
         {
-		    printf("level[%d], span:%d\n", j, m_header->level[j].span);
+            printf("level[%d], span:%d\n", j, m_header->level[j].span);
         }
-	}
-	printf("---------------------\n");
+    }
+    printf("---------------------\n");
 
-	int i = 1;
-	SkipListNode *x = m_header->level[0].forward;
-	while( x != NULL )
-	{
-		printf("node %d: \n", i);
-		printf("level: %d \n", x->levelLength );
-		for(int j=0; j < (int)x->levelLength; j++ )
-		{
+    int i = 1;
+    SkipListNode *x = m_header->level[0].forward;
+    while (x != NULL)
+    {
+        printf("node %d: \n", i);
+        printf("level: %d \n", x->levelLength);
+        for (int j = 0; j < (int)x->levelLength; j++)
+        {
             if (x->level != NULL)
             {
-                printf("\tlevel[%d], span: %d\n", j ,x->level[j].span);
+                printf("\tlevel[%d], span: %d\n", j, x->level[j].span);
             }
-		}
+        }
         x->score.showme();
-		printf("---------------------\n");
-		x = x->level[0].forward;
-		i++;
-	}
+        printf("---------------------\n");
+        x = x->level[0].forward;
+        i++;
+    }
 }
 
 template <typename SCORE, typename KEY, typename COMPARE>
-int SkipList<SCORE, KEY, COMPARE>::GetObjTopN( int n, vector<KEY>& v)
+int SkipList<SCORE, KEY, COMPARE>::GetObjTopN(int n, vector<KEY>& v)
 {
-	int i = 0;
-	SkipListNode *x = m_header->level[0].forward;
+    int i = 0;
+    SkipListNode *x = m_header->level[0].forward;
 
-	while(x && i < n)
-	{
-		v.push_back(x->key);
-		x = x->level[0].forward;
-		i++;
-	}
+    while (x && i < n)
+    {
+        v.push_back(x->key);
+        x = x->level[0].forward;
+        i++;
+    }
     return i;
 }
 
 template <typename SCORE, typename KEY, typename COMPARE>
-int SkipList<SCORE, KEY, COMPARE>::GetScoreTopN( int n, vector<SCORE>& v)
+int SkipList<SCORE, KEY, COMPARE>::GetScoreTopN(int n, vector<SCORE>& v)
 {
     int i = 0;
-	SkipListNode *x = m_header->level[0].forward;
+    SkipListNode *x = m_header->level[0].forward;
 
-	while(x && i < n)
-	{
-		v.push_back(x->score);
-		x = x->level[0].forward;
-		i++;
-	}
+    while (x && i < n)
+    {
+        v.push_back(x->score);
+        x = x->level[0].forward;
+        i++;
+    }
 
     return i;
 }
