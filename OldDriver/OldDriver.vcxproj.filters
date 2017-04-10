@@ -18,7 +18,7 @@
     <ClCompile Include="_main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="skipList.cpp">
+    <ClCompile Include="_skipList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

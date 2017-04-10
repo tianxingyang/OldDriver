@@ -5,6 +5,7 @@
     tangxing 2016/1/30
 
     更新: 2017/2/6 by tangxing
+    更新: 2017/4/10 by vitoyang
 */
 
 #include <time.h>
@@ -192,8 +193,8 @@ int SkipList<SCORE, KEY, COMPARE>::Insert(const SCORE& score, const KEY& key)
 {
     SkipListNode* x = m_header;
     //用来记录遍历过程中，每一层上将要与新节点连接的节点
-    SkipListNode* update[m_maxLevel];
-    int rank[m_maxLevel];
+    SkipListNode* update = new SkipListNode[m_maxLevel];
+    int *rank = new int[m_maxLevel];
 
     for (int i = m_level - 1; i >= 0; i--)
     {
@@ -406,7 +407,39 @@ void SkipList<SCORE, KEY, COMPARE>::PopTail()
 template<typename SCORE, typename KEY, typename COMPARE>
 inline SCORE * SkipList<SCORE, KEY, COMPARE>::GetScoreAtN(int n)
 {
-    return NULL;
+    if (n > m_length)
+    {
+        return NULL;
+    }
+
+    int i_level = m_level;
+    SkipListNode *x = m_header->level[m_level].forward;
+    int i = m_header->level[m_level].span;
+
+    for (; i > n; --i_level)
+    {
+        x = x->level[i_level].backward;
+        i -= x->level[i_level].span;
+    }
+
+    while (x && i < n)
+    {
+        if (i + x->level[i_level].span > n && i_level > 0)
+        {
+            --i_level;
+        }
+        x = x->level[i_level].forward;
+        i += x->level[i_level].span;
+    }
+
+    if (x)
+    {
+        return &x->score;
+    }
+    else
+    {
+        return NULL;
+    }
 }
 
 template <typename SCORE, typename KEY, typename COMPARE>
