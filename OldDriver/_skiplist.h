@@ -10,6 +10,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <vector>
+#include <random>
 using namespace std;
 
 template <typename SCORE, typename KEY, typename COMPARE>
@@ -45,6 +46,7 @@ public:
 
     //获取第N位的score
     SCORE* GetScoreAtN(int n);
+
     void PrintMe();
 
     SkipList(int level = SKIPLIST_DEFAULT_LEVEL)
@@ -86,13 +88,13 @@ private:
     };
 
     // 14层可以较好的支持2^14 个元素以内的skiplist
-    const static int SKIPLIST_DEFAULT_LEVEL = 14;
+    static const int SKIPLIST_DEFAULT_LEVEL;
 
     //skiplist最大为32层，层数过高会降低效率
-    const static int SKIPLIST_MAX_LEVEL = 32;
+    static const int SKIPLIST_MAX_LEVEL;
 
     // skiplist P = 1/4
-    const static float SKIPLIST_P = 0.25;
+    static const double SKIPLIST_P;
 
 private:
     //创建一个层数为level的SkipList节点
@@ -130,6 +132,15 @@ private:
 };
 
 template <typename SCORE, typename KEY, typename COMPARE>
+const double SkipList<SCORE, KEY, COMPARE>::SKIPLIST_P = 0.25;
+
+template <typename SCORE, typename KEY, typename COMPARE>
+const int SkipList<SCORE, KEY, COMPARE>::SKIPLIST_MAX_LEVEL = 25;
+
+template <typename SCORE, typename KEY, typename COMPARE>
+const int SkipList<SCORE, KEY, COMPARE>::SKIPLIST_DEFAULT_LEVEL = 14;
+
+template <typename SCORE, typename KEY, typename COMPARE>
 void SkipList<SCORE, KEY, COMPARE>::_Creat(int MaxLevel)
 {
     if (MaxLevel > SKIPLIST_MAX_LEVEL)
@@ -150,7 +161,7 @@ void SkipList<SCORE, KEY, COMPARE>::_Creat(int MaxLevel)
     m_tail = NULL;
 
     //设置随机种子
-    srandom(time(NULL));
+    srand(time(NULL));
 }
 
 template <typename SCORE, typename KEY, typename COMPARE>
@@ -170,7 +181,7 @@ template <typename SCORE, typename KEY, typename COMPARE>
 int SkipList<SCORE, KEY, COMPARE>::_RandomLevel()
 {
     int level = 1;
-    while ((random() & 0xFFFF) < (SKIPLIST_P * 0xFFFF))
+    while ((rand() & 0xFFFF) < (SKIPLIST_P * 0xFFFF))
         level += 1;
 
     return (level < m_maxLevel) ? level : m_maxLevel;

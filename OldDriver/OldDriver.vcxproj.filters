@@ -29,5 +29,8 @@
     <ClInclude Include="_skiplist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="misc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
