@@ -22,7 +22,7 @@ private:
         KEY key;
         SkipListNode* backward;
     };
-
+    
 };
 
 template<typename VALUE, typename KEY, typename COMPARE>
