@@ -27,7 +27,7 @@ class BasicClass
 public:
     BasicClass();
     ~BasicClass();
-    void printme(){ std::cout}
+    void printme() { std::cout << "public: BasicClass.printme()" << std::endl; }
 
 private:
 
