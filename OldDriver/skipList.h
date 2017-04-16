@@ -31,6 +31,11 @@ typedef struct skiplist
 
     nodeStructure *header;
 }skiplist;
+
+nodeStructure* createNode(int level, int value)
+{
+    nodeStructure *ns = (nodeStructure *)
+}
 //star版的skipList，拥有很好的拓展性，较为复杂
 //#include <random>
 //#include <ctime>
