@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CMain.cpp" />
     <ClCompile Include="miscMain.cpp" />
     <ClCompile Include="misc.cpp" />
   </ItemGroup>
