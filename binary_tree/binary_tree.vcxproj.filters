@@ -15,21 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="misc.cpp">
+    <ClCompile Include="my_binary_tree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="miscMain.cpp">
+    <ClCompile Include="my_binary_tree_node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CMain.cpp">
+    <ClCompile Include="test_my_binary_tree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="misc.h">
+    <ClInclude Include="my_binary_tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="test.h">
+    <ClInclude Include="my_binary_tree_node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -22,7 +22,7 @@
     <ProjectGuid>{2CB064A7-E517-4B87-9794-C1A35D6ADC20}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>OldDriver</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

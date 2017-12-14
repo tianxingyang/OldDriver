@@ -3,7 +3,7 @@
 
 using namespace std;
 //
-///*
+//
 //为复杂的声明定义一个新的简单的别名。方法是：在原来的声明里逐步用别名替换一部
 //分复杂声明，如此循环，把带变量名的部分留到最后替换，得到的就是原声明的最简化
 //版。举例：
@@ -94,10 +94,10 @@ using namespace std;
 //    std::cout << "VTable::funcBase3()" << std::endl;
 //}
 
-void PrintMe(int intArray[], int length)
-{
-    for (int i = 0; i != length; ++i)
-    {
-        cout << intArray[i] << endl;
-    }
-}
+//void PrintMe(int intArray[], int length)
+//{
+//    for (int i = 0; i != length; ++i)
+//    {
+//        cout << intArray[i] << endl;
+//    }
+//}

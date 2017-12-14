@@ -1,6 +1,6 @@
-///*
-//神tmd易语言
-//*/
+/*
+神tmd易语言
+*/
 //#define 趁还 while
 //#define 那个啥 int
 //#define 总的来说 main
