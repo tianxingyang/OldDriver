@@ -119,8 +119,6 @@
     <ClInclude Include="my_binary_tree.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="my_binary_tree_node.cpp" />
-    <ClCompile Include="my_binary_tree.cpp" />
     <ClCompile Include="test_my_binary_tree.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
