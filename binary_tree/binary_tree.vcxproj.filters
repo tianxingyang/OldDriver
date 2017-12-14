@@ -20,10 +20,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="my_binary_tree.h">
+    <ClInclude Include="my_binary_tree_1.0.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="my_binary_tree_node.h">
+    <ClInclude Include="my_binary_tree_node_1.0.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
