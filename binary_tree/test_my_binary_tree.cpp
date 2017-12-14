@@ -45,10 +45,10 @@ int main()
     auto node1 = NodeTest(1, "node1");
     auto node2 = NodeTest(2, "node2");
 
-    auto tree_root_node = MyBinaryTreeNode<NodeTest>(node1);
-    auto tree_node_1 = MyBinaryTreeNode<NodeTest>(node2);
-    auto binary_tree = MyBinaryTree<NodeTest>();
-    binary_tree.Add(&tree_node_1);
+    //auto tree_root_node = MyBinaryTreeNode<NodeTest>(node1);
+    //auto tree_node_1 = MyBinaryTreeNode<NodeTest>(node2);
+    //auto binary_tree = MyBinaryTree<NodeTest>();
+    //binary_tree.Add(&tree_node_1);
 
     return 0;
 }
