@@ -115,10 +115,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="my_binary_tree.h" />
+    <ClInclude Include="my_binary_tree_node.h" />
     <ClInclude Include="my_binary_tree_node_1.0.h" />
     <ClInclude Include="my_binary_tree_1.0.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="my_binary_tree.cpp" />
     <ClCompile Include="test_my_binary_tree.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

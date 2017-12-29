@@ -13,8 +13,6 @@ public:
     NodeTest(const NodeTest& rv);
     ~NodeTest();
 
-    int& GetElemA() { return elem_a; }
-    string& GetElemB() { return elem_b; }
 protected:
 private:
     int elem_a;
@@ -45,10 +43,10 @@ int main()
     auto node1 = NodeTest(1, "node1");
     auto node2 = NodeTest(2, "node2");
 
-    //auto tree_root_node = MyBinaryTreeNode<NodeTest>(node1);
-    //auto tree_node_1 = MyBinaryTreeNode<NodeTest>(node2);
-    //auto binary_tree = MyBinaryTree<NodeTest>();
-    //binary_tree.Add(&tree_node_1);
+    auto tree_root_node = MyBinaryTreeNode<NodeTest>(node1);
+    auto tree_node_1 = MyBinaryTreeNode<NodeTest>(node2);
+    auto binary_tree = MyBinaryTree<NodeTest>(tree_root_node);
+    binary_tree.Insert(&tree_node_1);
 
     return 0;
 }

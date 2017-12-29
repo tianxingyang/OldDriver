@@ -18,12 +18,21 @@
     <ClCompile Include="test_my_binary_tree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="my_binary_tree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="my_binary_tree_1.0.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="my_binary_tree_node_1.0.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="my_binary_tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="my_binary_tree_node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
