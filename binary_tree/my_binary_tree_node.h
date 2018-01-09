@@ -26,7 +26,7 @@ public:
     MyBinaryTreeNode* GetParent() const { return parent_; }
     void SetLeftChild(MyBinaryTreeNode<T>* left) { left_ = left; }
     void SetRightChild(MyBinaryTreeNode<T>* right) { right_ = right; }
-    void SetParent(MyBinaryTreeNode<T>* parent) { parent_ = parent; }
+    void SetParent(MyBinaryTreeNode<T>* parent, ChildId child_id);
 
     T GetData() const { return data_; }
     void SetData(const T& data);
@@ -37,6 +37,28 @@ private:
     MyBinaryTreeNode* right_;
     MyBinaryTreeNode* parent_;
 };
+
+template<class T>
+inline void MyBinaryTreeNode<T>::SetParent(MyBinaryTreeNode<T>* parent, ChildId child_id)
+{
+    if (parent == nullptr)
+    {
+        return;
+    }
+    switch (child_id)
+    {
+    case kLeftChild:
+        parent_ = parent;
+        parent->left_ = this;
+        break;
+    case kRightChild:
+        parent_ = parent;
+        parent->right_ = this;
+        break;
+    default:
+        break;
+    }
+}
 
 template<class T>
 inline void MyBinaryTreeNode<T>::SetData(const T & data)
