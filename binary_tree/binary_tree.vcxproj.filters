@@ -35,5 +35,8 @@
     <ClInclude Include="my_binary_tree_node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="common\common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

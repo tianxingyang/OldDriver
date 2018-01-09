@@ -115,6 +115,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="common\common.h" />
     <ClInclude Include="my_binary_tree.h" />
     <ClInclude Include="my_binary_tree_node.h" />
     <ClInclude Include="my_binary_tree_node_1.0.h" />

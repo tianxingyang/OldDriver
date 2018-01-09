@@ -1,8 +1,8 @@
 #ifndef MY_BINARY_TREE_H_
 #define MY_BINARY_TREE_H_
 
-#include "my_binary_tree_node.h"
 #include <map>
+#include "my_binary_tree_node.h"
 
 template <class T>
 class MyBinaryTree

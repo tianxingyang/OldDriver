@@ -1,11 +1,7 @@
 #ifndef MY_BINARY_TREE_NODE_H_
 #define MY_BINARY_TREE_NODE_H_
 
-enum ChildId
-{
-    kLeftChild = 0,
-    kRightChild = 1,
-};
+#include "common/common.h"
 
 template <class T>
 class MyBinaryTreeNode
@@ -39,7 +35,7 @@ private:
 };
 
 template<class T>
-inline void MyBinaryTreeNode<T>::SetParent(MyBinaryTreeNode<T>* parent, ChildId child_id)
+inline void MyBinaryTreeNode<T>::SetParent(MyBinaryTreeNode<T>* parent, olddriver::ChildId child_id)
 {
     if (parent == nullptr)
     {
@@ -47,11 +43,11 @@ inline void MyBinaryTreeNode<T>::SetParent(MyBinaryTreeNode<T>* parent, ChildId 
     }
     switch (child_id)
     {
-    case kLeftChild:
+    case olddriver::kLeftChild:
         parent_ = parent;
         parent->left_ = this;
         break;
-    case kRightChild:
+    case olddriver::kRightChild:
         parent_ = parent;
         parent->right_ = this;
         break;
