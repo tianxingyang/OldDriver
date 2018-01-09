@@ -8,58 +8,36 @@ template <class T>
 class MyBinaryTree
 {
 public:
-    MyBinaryTree();
-    MyBinaryTree(T* root_node);
-    MyBinaryTree(T& root_node);
-    ~MyBinaryTree();
+    MyBinaryTree() : root_(nullptr) {}
+    MyBinaryTree(const MyBinaryTree<T>& tree);
+    ~MyBinaryTree(){}
 
-public:
-    void Insert(T* node_temp);
+protected:
+    MyBinaryTreeNode<T>* Copy(MyBinaryTreeNode<T>* root, MyBinaryTreeNode<T>* parent);
 
 private:
-    T* root_ = nullptr;
+    MyBinaryTreeNode<T>* root_;
 };
 
 template<class T>
-inline MyBinaryTree<T>::MyBinaryTree()
+inline MyBinaryTree<T>::MyBinaryTree(const MyBinaryTree<T>& tree)
 {
+    root_ = Copy(tree.root_, nullptr);
 }
 
-template <class T>
-inline MyBinaryTree<T>::MyBinaryTree(T* root_node)
+template<class T>
+inline MyBinaryTreeNode<T>* MyBinaryTree<T>::Copy(MyBinaryTreeNode<T>* root, MyBinaryTreeNode<T>* parent)
 {
-    root_ = root_node;
+    if (root == nullptr)
+    {
+        return nullptr;
+    }
+    MyBinaryTreeNode<T>* node_temp = new MyBinaryTreeNode<T>;
+    node_temp->data_ = root->data_;
+    node_temp->parent_ = parent;
+    node_temp->left_ = Copy(root->left_, node_temp);
+    node_temp->right_ = Copy(root->right_, node_temp);
+    return node_temp;
 }
 
-template <class T>
-inline MyBinaryTree<T>::MyBinaryTree(T& root_node)
-{
-    root_ = &root_node;
-}
-
-template <class T>
-inline MyBinaryTree<T>::~MyBinaryTree()
-{
-}
-
-template <class T>
-inline void MyBinaryTree<T>::Insert(T* node_temp)
-{
-    if (node_temp == nullptr)
-    {
-        return;
-    }
-    else if (root_ == nullptr)
-    {
-        root_ = node_temp;
-    }
-    else if (root_->IsLeftNull())
-    {
-        Insert(root_->GetLeftChild());
-    }
-    else if (root_->IsRightNull())
-    {
-        Insert(root_->GetRightChild());
-    }
-}
 #endif

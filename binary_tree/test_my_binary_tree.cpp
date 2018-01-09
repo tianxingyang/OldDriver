@@ -5,34 +5,34 @@
 
 using namespace std;
 
-class NodeTest : public MyBinaryTreeNode<NodeTest>
-{
-public:
-    NodeTest() { cout << "default constructor" << endl; }
-    NodeTest(int elem1, string elem2);
-    NodeTest(const NodeTest& rv);
-    //NodeTest& operator= (const NodeTest& rv);
-    //virtual MyBinaryTreeNode<NodeTest>& operator= (const NodeTest& rv);
-    ~NodeTest();
-
-private:
-    int elem_a_;
-    string elem_b_;
-};
-
-NodeTest::NodeTest(int elem_int, string elem_string)
-{
-    this->elem_a_ = elem_int;
-    this->elem_b_ = elem_string;
-    cout << "reloaded constructor" << endl;
-}
-
-NodeTest::NodeTest(const NodeTest & rv)
-{
-    this->elem_a_ = rv.elem_a_;
-    this->elem_b_ = rv.elem_b_.data();
-    cout << "copy constructor" << endl;
-}
+//class NodeTest : public MyBinaryTreeNode<NodeTest>
+//{
+//public:
+//    NodeTest() { cout << "default constructor" << endl; }
+//    NodeTest(int elem1, string elem2);
+//    NodeTest(const NodeTest& rv);
+//    //NodeTest& operator= (const NodeTest& rv);
+//    //virtual MyBinaryTreeNode<NodeTest>& operator= (const NodeTest& rv);
+//    ~NodeTest();
+//
+//private:
+//    int elem_a_;
+//    string elem_b_;
+//};
+//
+//NodeTest::NodeTest(int elem_int, string elem_string)
+//{
+//    this->elem_a_ = elem_int;
+//    this->elem_b_ = elem_string;
+//    cout << "reloaded constructor" << endl;
+//}
+//
+//NodeTest::NodeTest(const NodeTest & rv)
+//{
+//    this->elem_a_ = rv.elem_a_;
+//    this->elem_b_ = rv.elem_b_.data();
+//    cout << "copy constructor" << endl;
+//}
 
 //MyBinaryTreeNode<NodeTest>& NodeTest::operator=(const NodeTest & rv)
 //{
@@ -41,15 +41,15 @@ NodeTest::NodeTest(const NodeTest & rv)
 //    return *this;
 //}
 
-NodeTest::~NodeTest()
-{
-    elem_a_ = 0;
-}
+//NodeTest::~NodeTest()
+//{
+//    elem_a_ = 0;
+//}
 
 int main()
 {
-    auto tree_root_node = NodeTest(1, "node1");
-    auto tree_node_1 = NodeTest(2, "node2");
+    /*auto tree_root_node = NodeTest(1, "node1");
+    auto tree_node_1 = NodeTest(2, "node2");*/
     /*
     如果这里的构造函数，使用的值传递而不是引用传递，会造成NodeTest中的string成员无法正常赋值到二叉树的节点中
     其原因是，当类内成员变量需要动态开辟堆内存，如果实行位拷贝，也就是把对象里的值完全复制给另一个对象，如A=B。
@@ -59,7 +59,7 @@ int main()
     当构造函数结束时，临时变量被析构了，而string对象也会进行析构，导致二叉树的节点中string成员为空
     解决方案：使用引用传递（还是存在一个问题，那就是当这个对象被析构的时候，树中的值也会被修改）
     */
-    auto binary_tree = MyBinaryTree<NodeTest>(&tree_root_node);
+    //auto binary_tree = MyBinaryTree<NodeTest>(&tree_root_node);
     //tree_root_node.~NodeTest();
     //binary_tree.Insert(&tree_node_1);
 

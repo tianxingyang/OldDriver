@@ -22,7 +22,7 @@ public:
     MyBinaryTreeNode* GetParent() const { return parent_; }
     void SetLeftChild(MyBinaryTreeNode<T>* left) { left_ = left; }
     void SetRightChild(MyBinaryTreeNode<T>* right) { right_ = right; }
-    void SetParent(MyBinaryTreeNode<T>* parent, ChildId child_id);
+    void SetParent(MyBinaryTreeNode<T>* parent, olddriver::ChildId child_id);
 
     T GetData() const { return data_; }
     void SetData(const T& data);
