@@ -1,47 +1,36 @@
-#pragma once
-
 #ifndef MY_BINARY_TREE_NODE_H_
 #define MY_BINARY_TREE_NODE_H_
 
-template<class T>
+template <class T>
 class MyBinaryTreeNode
 {
 public:
-    MyBinaryTreeNode();
-    MyBinaryTreeNode(const T elem_temp);
-    ~MyBinaryTreeNode();
+    MyBinaryTreeNode<T>() {}
+    //virtual MyBinaryTreeNode<T>& operator= (const T& rv) = 0;
+    ~MyBinaryTreeNode<T>() {}
 
 public:
     bool IsLeftNull() { return left_ == nullptr; }
     bool IsRightNull() { return right_ == nullptr; }
 
-    MyBinaryTreeNode* GetLeftChild() { return left_; }
-    MyBinaryTreeNode* GetRightChild() { return right_; }
+    MyBinaryTreeNode* GetLeftChild() const { return left_; }
+    MyBinaryTreeNode* GetRightChild() const { return right_; }
+    void SetLeftChild(MyBinaryTreeNode<T>* left) { left_ = left; }
+    void SetRightChild(MyBinaryTreeNode<T>* right) { right_ = right; }
+
+    T GetData() const { return data_; }
+    void SetData(const T& data);
 
 private:
-    T elem_;
+    T data_;
     MyBinaryTreeNode* left_ = nullptr;
     MyBinaryTreeNode* right_ = nullptr;
 };
 
 template<class T>
-inline MyBinaryTreeNode<T>::MyBinaryTreeNode()
+inline void MyBinaryTreeNode<T>::SetData(const T & data)
 {
-    left_ = nullptr;
-    right_ = nullptr;
-}
-
-template<class T>
-inline MyBinaryTreeNode<T>::MyBinaryTreeNode(const T elem_temp)
-{
-    this->elem_ = elem_temp;
-    left_ = nullptr;
-    right_ = nullptr;
-}
-
-template<class T>
-inline MyBinaryTreeNode<T>::~MyBinaryTreeNode()
-{
+    data_ = data;
 }
 
 #endif
